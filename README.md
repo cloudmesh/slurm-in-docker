@@ -1,5 +1,14 @@
 # slurm-in-docker
 
+# Images
+
+- 1. build cloudmesh-rockylinux
+   - 1.1 install mpi in c1, c2, slurmctld
+   - 1.2 install pympi c1, c2, slurmctld
+   - 1.3 clone the cloudmesh-mpi dir here
+   - 1.3 fetch the pdf file of tutorial and place in homedir 
+
+- 2. use cloudmesh rockylinux in c1, c2, slurmctld
 
 ## ports/rodrigo
 
