@@ -39,9 +39,9 @@ RUN set -ex \
     && yum groupinstall "Development Tools" -y \
     && yum install openssl-devel libffi-devel bzip2-devel -y \
     && cd ~ \
-    && wget https://www.python.org/ftp/python/3.10.6/Python-3.10.6.tgz \
-    && tar xvf Python-3.10.6.tgz \
-    && cd Python-3.10.6 \
+    && wget https://www.python.org/ftp/python/3.10.8/Python-3.10.8.tgz \
+    && tar xvf Python-3.10.8.tgz \
+    && cd Python-3.10.8 \
     && ./configure --enable-optimizations \
     && make altinstall \
     && yum install python3-pip -y
