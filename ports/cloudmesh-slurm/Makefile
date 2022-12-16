@@ -1,9 +1,6 @@
 image:
 	docker build -t slurm-docker-cluster-cm:21.08 .
 
-image22:
-	docker build -t slurm-docker-cluster-cm:22.05 .
-
 run:
 	docker-compose up -d
 
