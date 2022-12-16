@@ -1,10 +1,20 @@
 FROM rockylinux:8
 
-LABEL org.opencontainers.image.source="https://github.com/giovtorres/slurm-docker-cluster" \
-      org.opencontainers.image.title="slurm-docker-cluster" \
-      org.opencontainers.image.description="Slurm Docker cluster on Rocky Linux 8" \
+LABEL org.opencontainers.image.source="https://github.com/github/slurm-docker-cluster" \
+      org.opencontainers.image.title="slurm-docker-cluster-with-cloudmesh" \
+      org.opencontainers.image.description="Slurm Docker cluster on Rocky Linux 8 with cloudmesh" \
       org.label-schema.docker.cmd="docker-compose up -d" \
-      maintainer="Giovanni Torres"
+      maintainer="Gregor von Laszewski and JP. Fleischer"
+
+# adapted from Giovanni Torres who created the template for slurm initially
+# It was enhanced by installing
+# * python 3.10.8
+# * openmpi 4.1.4
+# * cloudmesh-cmd5
+# * cloudmesh-sbatch
+# * cloudmesh-mpi
+# * add of the PDF manual for python mpi developed by the cloudmesh team
+# * https://github.com/cloudmesh/cloudmesh-mpi/blob/main/docs/report-mpi.pdf
 
 ARG SLURM_TAG=slurm-21-08-6-1
 # https://github.com/SchedMD/slurm/releases/tag/slurm-21-08-8-2
