@@ -1,5 +1,5 @@
 image:
-	docker build -t slurm-docker-cluster-cm:21.08 .
+	docker build -t cloudmesh-slurm:21.08 .
 
 run:
 	docker-compose up -d
@@ -27,4 +27,4 @@ test:
 clean:
 	docker-compose stop
 	docker-compose rm -f
-	docker volume rm slurm-docker-cluster_etc_munge slurm-docker-cluster_etc_slurm slurm-docker-cluster_slurm_jobdir slurm-docker-cluster_var_lib_mysql slurm-docker-cluster_var_log_slurm
+	docker volume rm cloudmesh-slurm_etc_munge cloudmesh-slurm_etc_slurm cloudmesh-slurm_slurm_jobdir cloudmesh-slurm_var_lib_mysql cloudmesh-slurm_var_log_slurm
