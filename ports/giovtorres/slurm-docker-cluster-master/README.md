@@ -84,6 +84,32 @@ PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
 normal*      up 5-00:00:00      2   idle c[1-2]
 ```
 
+
+## Testing salloc
+
+make shell
+
+```bash
+$ salloc --nodes=2 sh
+```
+
+results in 
+
+```
+salloc: Granted job allocation 10
+```
+
+```bash
+$ srun --label hostname
+```
+Results in 
+
+```
+# 0: c1
+# 1: c2
+```
+
+
 ## Submitting Jobs
 
 The `slurm_jobdir` named volume is mounted on each Slurm container as `/data`.
