@@ -25,9 +25,6 @@ RUN set -ex \
        make \
        munge \
        munge-devel \
-       python3-devel \
-       python3-pip \
-       python3 \
        mariadb-server \
        mariadb-devel \
        psmisc \
@@ -35,6 +32,19 @@ RUN set -ex \
        vim-enhanced \
     && yum clean all \
     && rm -rf /var/cache/yum
+
+# Python installation
+
+RUN set -ex \
+    && yum groupinstall "Development Tools" -y \
+    && yum install openssl-devel libffi-devel bzip2-devel -y \
+    && cd ~ \
+    && wget https://www.python.org/ftp/python/3.10.6/Python-3.10.6.tgz \
+    && tar xvf Python-3.10.6.tgz \
+    && cd Python-3.10.6 \
+    && ./configure --enable-optimizations \
+    && make altinstall \
+    && yum install python3-pip -y
 
 RUN alternatives --set python /usr/bin/python3
 
@@ -88,6 +98,16 @@ COPY slurmdbd.conf /etc/slurm/slurmdbd.conf
 RUN set -x \
     && chown slurm:slurm /etc/slurm/slurmdbd.conf \
     && chmod 600 /etc/slurm/slurmdbd.conf
+
+RUN set -x \
+    && python -V \
+    && python -m venv ~/ENV3 \
+    && source ~/ENV3/bin/activate \
+    && mkdir ~/cm \
+    && cd ~/cm \
+    && yum install python3-devel -y \
+    && pip install cloudmesh-installer \
+    && cloudmesh-installer get sbatch
 
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
