@@ -7,6 +7,9 @@ LABEL org.opencontainers.image.source="https://github.com/giovtorres/slurm-docke
       maintainer="Giovanni Torres"
 
 ARG SLURM_TAG=slurm-21-08-6-1
+# https://github.com/SchedMD/slurm/releases/tag/slurm-21-08-8-2
+# ARG SLURM_TAG=slurm-21-08-8-2
+
 ARG GOSU_VERSION=1.11
 
 RUN set -ex \
@@ -35,13 +38,15 @@ RUN set -ex \
 
 # Python installation
 
+ARG PYTHON=3.10.8
+
 RUN set -ex \
     && yum groupinstall "Development Tools" -y \
     && yum install openssl-devel libffi-devel bzip2-devel -y \
     && cd ~ \
-    && wget https://www.python.org/ftp/python/3.10.8/Python-3.10.8.tgz \
-    && tar xvf Python-3.10.8.tgz \
-    && cd Python-3.10.8 \
+    && wget https://www.python.org/ftp/python/${PYTHON}/Python-${PYTHON}.tgz \
+    && tar xvf Python-${PYTHON}.tgz \
+    && cd Python-${PYTHON} \
     && ./configure --enable-optimizations \
     && make altinstall \
     && yum install python3-pip -y
@@ -109,6 +114,24 @@ RUN set -x \
     && pip install cloudmesh-installer \
     && cloudmesh-installer get sbatch
 
+RUN set -x \
+    && cd ~/cm \
+    && source ~/ENV3/bin/activate \
+    && yum install -y openmpi openmpi-devel
+
+RUN set -x \
+    && cd ~/cm \
+    && source ~/ENV3/bin/activate \
+    && pip install mpi4py
+
+RUN set -x \
+    && cd ~/cm \
+    && source ~/ENV3/bin/activate \
+    && cloudmesh-installer get mpi
+
+RUN set -x \
+	&& cd ~ \
+    && wget https://github.com/cloudmesh/cloudmesh-mpi/blob/main/docs/report-mpi.pdf
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
