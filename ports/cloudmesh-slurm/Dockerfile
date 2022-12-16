@@ -105,33 +105,34 @@ RUN set -x \
     && chmod 600 /etc/slurm/slurmdbd.conf
 
 RUN set -x \
+    && yum install python3-devel -y
+
+RUN set -x \
+    && cd ~ \
+    && wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.4.tar.gz \
+    && gunzip -c openmpi-4.1.4.tar.gz | tar xf - \
+    && cd openmpi-4.1.4 \
+    && ./configure --prefix=/usr/local \
+    && make all install
+
+RUN set -x \
     && python -V \
     && python -m venv ~/ENV3 \
     && source ~/ENV3/bin/activate \
     && mkdir ~/cm \
     && cd ~/cm \
-    && yum install python3-devel -y \
+    && pip install mpi4py \
     && pip install cloudmesh-installer \
-    && cloudmesh-installer get sbatch
-
-RUN set -x \
-    && cd ~/cm \
-    && source ~/ENV3/bin/activate \
-    && yum install -y openmpi openmpi-devel
-
-RUN set -x \
-    && cd ~/cm \
-    && source ~/ENV3/bin/activate \
-    && pip install mpi4py
-
-RUN set -x \
-    && cd ~/cm \
-    && source ~/ENV3/bin/activate \
-    && cloudmesh-installer get mpi
+    && cloudmesh-installer get sbatch mpi
 
 RUN set -x \
 	&& cd ~ \
     && wget https://github.com/cloudmesh/cloudmesh-mpi/blob/main/docs/report-mpi.pdf
+
+RUN set -x \
+	&& cd ~ \
+    && source ~/ENV3/bin/activate \
+    && python -c "from mpi4py import MPI; print('mpi4py version:', MPI.Get_version())"
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
