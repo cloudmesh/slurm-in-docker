@@ -136,6 +136,10 @@ RUN set -x \
     && cloudmesh-installer get sbatch mpi
 
 RUN set -x \
+    && source ~/ENV3/bin/activate \
+    && cms help
+
+RUN set -x \
 	&& cd ~ \
     && wget https://github.com/cloudmesh/cloudmesh-mpi/blob/main/docs/report-mpi.pdf
 

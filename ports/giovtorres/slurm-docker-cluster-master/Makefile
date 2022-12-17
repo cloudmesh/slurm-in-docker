@@ -1,3 +1,5 @@
+all: image run start shell
+
 image:
 	docker build -t slurm-docker-cluster:21.08 .
 

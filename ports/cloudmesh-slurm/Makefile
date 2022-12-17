@@ -1,3 +1,5 @@
+all: image run register start
+
 image:
 	docker build -t cloudmesh-slurm:21.08 .
 
