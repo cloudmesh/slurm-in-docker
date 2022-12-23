@@ -1,5 +1,20 @@
 # slurm-in-docker
 
+# Instructions
+
+The user must have docker/docker-desktop.
+
+```bash
+cd ~/cm
+git clone https://github.com/cloudmesh/slurm-in-docker.git
+cd slurm-in-docker/ports/cloudmesh-slurm
+make image
+make run
+make register
+make start
+make shell
+``
+
 # Images
 
 - 1. build cloudmesh-rockylinux
